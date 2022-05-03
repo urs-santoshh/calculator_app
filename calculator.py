@@ -36,13 +36,15 @@ class Calculator:
             1:(3,1),2:(3,2),3:(3,3),
             ".":(4,1),0:(4,2)
         }
-        
+
         self.operations = {"/": "\u00F7", "*": "\u00D7", "-": "-", "+": "+"}
 
         self.create_digits_buttons()
         self.create_operator_buttons()
         self.create_clear_button()
         self.create_equals_button()
+        self.create_square_button()
+        self.create_sqrt_button()
         
 
     def create_display_labels(self):
@@ -76,11 +78,19 @@ class Calculator:
 
     def create_clear_button(self):
         button = tk.Button(self.buttons_frame, text="C", bg=off_white, fg=label_color, font=default_font_style, borderwidth=0, command=self.clear)
-        button.grid(row=0, column=1, columnspan=3, sticky=tk.NSEW)
+        button.grid(row=0, column=1, sticky=tk.NSEW)
 
     def create_equals_button(self):
         button = tk.Button(self.buttons_frame, text="=", bg=light_blue, fg=label_color, font=default_font_style, borderwidth=0, command=self.evaluate)
         button.grid(row=4, column=3, columnspan=2, sticky=tk.NSEW)
+
+    def create_square_button(self):
+        button = tk.Button(self.buttons_frame, text="x\u00b2", bg=off_white, fg=label_color, font=default_font_style, borderwidth=0, command=self.square)
+        button.grid(row=0, column= 2, sticky=tk.NSEW)
+    
+    def create_sqrt_button(self):
+        button = tk.Button(self.buttons_frame, text="\u221ax", bg=off_white, fg=label_color, font=default_font_style, borderwidth=0, command=self.sqrt)
+        button.grid(row=0, column= 3, sticky=tk.NSEW)
 
     def update_total_label(self):
         expression = self.total_expression
@@ -118,6 +128,14 @@ class Calculator:
             self.current_expression = "Error"
         finally:
             self.update_current_label()
+
+    def square(self):
+        self.current_expression = str(eval(f"{self.current_expression}**2"))
+        self.update_current_label()
+    
+    def sqrt(self):
+        self.current_expression = str(eval(f"{self.current_expression}**0.5"))
+        self.update_current_label()
     
     def run(self):
         self.window.mainloop()
